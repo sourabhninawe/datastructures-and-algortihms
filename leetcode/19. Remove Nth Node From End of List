@@ -1,0 +1,70 @@
+# Solution 1 - Brute force
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode it = head;
+        int count =0 ;
+        while(it!=null){
+            count++; 
+            it = it.next;
+        }
+        int nodeToRemove = count-n+1;
+        if(nodeToRemove == 1)
+            head = head.next;
+        else{
+            ListNode current = head;
+            ListNode prev = null;
+            int currentCounter = 1;
+            while( currentCounter < nodeToRemove){
+                prev = current;
+                current = current.next;
+                currentCounter++;
+
+            }
+            if(current!=null){
+                prev.next = current.next;
+                current = null;
+            }
+        }
+        return head;
+    }
+}
+
+# Solution 2 - 2 Pointer approach
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fastPtr = head;
+        ListNode slowPtr = head;
+        int counter = 1;
+        while(counter<=n){
+            counter++;
+            fastPtr = fastPtr.next;
+        }
+        if (fastPtr == null) return head.next;
+        while(fastPtr.next!=null){
+            fastPtr = fastPtr.next;
+            slowPtr = slowPtr.next;
+        }
+        slowPtr.next = slowPtr.next.next;
+        return head;
+    }
+}

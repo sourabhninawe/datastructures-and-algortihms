@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode it1= l1;
+        ListNode it2 = l2;
+        int carry = 0, sum=0;
+        ListNode sumTracker = null;
+        ListNode sumHead = null;
+        while(it1 != null && it2!= null){
+            sum = (it1.val + it2.val + carry)%10;
+            if(sumHead == null){
+                sumHead = new ListNode(sum);
+                sumTracker = sumHead;
+            }
+            else{
+                sumTracker.next = new ListNode(sum);
+                sumTracker = sumTracker.next;
+            }
+            carry = (it1.val + it2.val + carry)/ 10; 
+            it1=it1.next;
+            it2=it2.next;
+        }
+        while(it1!=null){
+            sum =(it1.val + carry)% 10;
+            carry = (it1.val + carry)/10;
+            if(sumHead == null){
+                sumHead = new ListNode(sum);
+                sumTracker = sumHead;
+            }
+            else{
+                sumTracker.next = new ListNode(sum);
+                sumTracker = sumTracker.next;
+            }
+            it1 = it1.next;
+        }
+        while(it2!=null){
+            sum =(it2.val + carry)% 10;
+            carry = (it2.val + carry)/10;
+            if(sumHead == null){
+                sumHead = new ListNode(sum);
+                sumTracker = sumHead;
+            }
+            else{
+                sumTracker.next = new ListNode(sum);
+                sumTracker = sumTracker.next;
+            }
+            it2 = it2.next;
+        }
+        if(carry!=0){
+            sumTracker.next = new ListNode(carry);
+            sumTracker = sumTracker.next;
+        }
+        return sumHead;
+    }
+}
